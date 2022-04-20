@@ -41,9 +41,18 @@ export function controller(routePrefix: string) {
       const middlewares =
         Reflect.getMetadata(MetadataKeys.middleware, target.prototype, key) ||
         [];
+      const requiredBodyProps =
+        Reflect.getMetadata(MetadataKeys.validator, target.prototype, key) ||
+        [];
+      const validator = bodyValidators(requiredBodyProps);
 
       if (path) {
-        router[method](`${routePrefix}${path}`, ...middlewares, routeHandler);
+        router[method](
+          `${routePrefix}${path}`,
+          ...middlewares,
+          validator,
+          routeHandler
+        );
       }
     }
   };
