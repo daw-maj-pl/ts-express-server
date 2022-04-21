@@ -32,7 +32,7 @@ class RootController {
     }
   }
 
-  @get('/prtected')
+  @get('/protected')
   @use(requireAuth)
   getProtected(req: Request, res: Response) {
     res.send('Welcome to protected route, logged in user');
